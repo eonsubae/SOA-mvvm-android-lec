@@ -1,7 +1,7 @@
 package com.example.animals.util
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class SharedPreferencesHelper(context: Context) {
 
