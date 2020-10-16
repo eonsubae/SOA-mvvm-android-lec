@@ -7,18 +7,21 @@
         <variable
             name="animal"
             type="com.example.animals.model.Animal" />
+
+        <variable
+            name="palette"
+            type="com.example.animals.model.AnimalPalette" />
     </data>
     
     <LinearLayout
-        android:id="@+id/animalLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@{palette.color}"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".view.DetailFragment">
 
         <ImageView
-            android:id="@+id/animalImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imageUrl="@{animal.imageUrl}"
