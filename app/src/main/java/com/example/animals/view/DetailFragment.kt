@@ -7,27 +7,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.animals.R
+import com.example.animals.databinding.FragmentDetailBinding
 import com.example.animals.model.Animal
 import com.example.animals.util.getProgressDrawable
 import com.example.animals.util.loadImage
-import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
 
     var animal: Animal? = null
+    private lateinit var dataBinding: FragmentDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,18 +39,11 @@ class DetailFragment : Fragment() {
             animal = DetailFragmentArgs.fromBundle(it).animal
         }
 
-        context?.let {
-            animalImage.loadImage(animal?.imageUrl, getProgressDrawable(it))
-        }
-
-        animalName.text = animal?.name
-        animalLocation.text = animal?.location
-        animalLifespan.text = animal?.lifeSpan
-        animalDiet.text = animal?.diet
-
         animal?.imageUrl?.let {
             setupBackgroundColor(it)
         }
+
+        dataBinding.animal = animal
     }
 
     private fun setupBackgroundColor(url: String) {
@@ -64,7 +59,7 @@ class DetailFragment : Fragment() {
                     Palette.from(resource)
                         .generate() { palette ->
                             val intColor = palette?.lightMutedSwatch?.rgb ?: 0
-                            animalLayout.setBackgroundColor(intColor)
+                            dataBinding.animalLayout.setBackgroundColor(intColor)
                         }
                 }
 
